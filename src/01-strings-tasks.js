@@ -202,8 +202,12 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/* width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  const dush = '─';
+  const start = `┌${dush.repeat(width - 2)}┐\n`;
+  const middle = `│${' '.repeat(width - 2)}│\n`;
+  const end = `└${dush.repeat(width - 2)}┘\n`;
+  return start + middle.repeat(height - 2) + end;
 }
 
 /**
@@ -222,8 +226,20 @@ function getRectangleString(/* width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-  throw new Error('Not implemented');
+function encodeToRot13(str) {
+  const alphabet =
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz';
+  let newStr = '';
+
+  for (let i = 0; i < str.length; i += 1) {
+    if (alphabet.indexOf(str[i]) === -1) {
+      newStr += str[i];
+    } else {
+      newStr += str[i].replace(str[i], alphabet[alphabet.indexOf(str[i]) + 13]);
+    }
+  }
+
+  return newStr;
 }
 
 /**
@@ -267,8 +283,25 @@ function isString(value) {
  *   'Q♠' => 50
  *   'K♠' => 51
  */
-function getCardId(/* value */) {
-  throw new Error('Not implemented');
+function getCardId(value) {
+  /* const suits = {
+    '♣': 0,
+    '♦': 13,
+    '♥': 26,
+    '♠': 39,
+  };
+  const ranks = {
+    J: 11,
+    Q: 12,
+    K: 13,
+    A: 1,
+  };
+  const ranksValue = value.replace(/[AJQK]/, (char) => suits[char]);
+  return +ranks[ranksValue.slice(-1)] + +[ranksValue.slice(0, -1)] - 1; */
+  return (
+    '♣♦♥♠'.indexOf(value[value.length - 1]) * 13 +
+    'A234567891JQK'.indexOf(value[0])
+  );
 }
 
 module.exports = {
