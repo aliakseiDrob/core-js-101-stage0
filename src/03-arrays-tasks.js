@@ -193,8 +193,8 @@ function getTail(arr, n) {
  *    +'20,21,22,23,24\n'
  *    +'30,31,32,33,34'
  */
-function toCsvText(/* arr */) {
-  throw new Error('Not implemented');
+function toCsvText(arr) {
+  return arr.map((element) => element.join(',')).join('\n');
 }
 
 /**
@@ -528,8 +528,14 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const result = array.reduce((map, item) => {
+    const key = keySelector(item);
+    const value = valueSelector(item);
+    return map.set(key, [...(map.get(key) || []), value]);
+  }, new Map());
+
+  return result;
 }
 
 /**
@@ -561,8 +567,8 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  throw new Error('Not implemented');
+function getElementByIndexes(array, indexe) {
+  return indexe.reduce((acc, index) => acc[index], array);
 }
 
 /**
