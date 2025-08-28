@@ -310,7 +310,6 @@ function getDigitalRoot(num) {
     .toString()
     .split('')
     .reduce((acc, n) => acc + Number(n), 0);
-
   return res <= 9 ? res : getDigitalRoot(res);
 }
 
@@ -359,8 +358,8 @@ function isBracketsBalanced(/* str */) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n1) {
+  return num.toString(n1);
 }
 
 /**
@@ -375,8 +374,19 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  const res = {};
+
+  pathes.forEach((path) =>
+    path.split('/').forEach((dir) => {
+      res[dir] = res[dir] ? res[dir] + 1 : 1;
+    })
+  );
+
+  return Object.keys(res).reduce(
+    (acc, key) => (res[key] === pathes.length ? `${acc}${key}/` : acc),
+    ''
+  );
 }
 
 /**
@@ -397,8 +407,13 @@ function getCommonDirectoryPath(/* pathes */) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const res = m1.map((line, i) =>
+    m2[0].map((col, j) =>
+      line.reduce((acc, k, n) => acc + m1[i][n] * m2[n][j], 0)
+    )
+  );
+  return res;
 }
 
 /**
@@ -431,8 +446,28 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(pos) {
+  const winsCombin = [
+    [pos[0][0], pos[0][1], pos[0][2]],
+    [pos[1][0], pos[1][1], pos[1][2]],
+    [pos[2][0], pos[2][1], pos[2][2]],
+
+    [pos[0][0], pos[1][0], pos[2][0]],
+    [pos[0][1], pos[1][1], pos[2][1]],
+    [pos[0][2], pos[1][2], pos[2][2]],
+
+    [pos[0][0], pos[1][1], pos[2][2]],
+    [pos[0][2], pos[1][1], pos[2][0]],
+  ];
+
+  for (let j = 0; j < winsCombin.length; j += 1) {
+    const row = winsCombin[j];
+    if (row[0] === row[2] && row[0] === row[1] && row[0]) {
+      return row[0];
+    }
+  }
+
+  return undefined;
 }
 
 module.exports = {
