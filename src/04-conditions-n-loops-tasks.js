@@ -475,14 +475,10 @@ function evaluateTicTacToePosition(pos) {
     [pos[0][2], pos[1][1], pos[2][0]],
   ];
 
-  for (let j = 0; j < winsCombin.length; j += 1) {
-    const row = winsCombin[j];
-    if (row[0] === row[2] && row[0] === row[1] && row[0]) {
-      return row[0];
-    }
-  }
-
-  return undefined;
+  const winLine = winsCombin.find(
+    (line) => line[0] && line.every((cell) => cell === line[0])
+  );
+  return winLine ? winLine[0] : undefined;
 }
 
 module.exports = {
